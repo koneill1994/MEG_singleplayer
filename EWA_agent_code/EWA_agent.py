@@ -1,6 +1,14 @@
 # Agent which will run EWA reasoning
 # 
+# Kevin O\'Neill
+# with theoretical assistance from M_Collins
+
 # this is to encapsulate the logic and keep track of each agent's variables
+
+# NOTA BENE: This assumes choices are 1:7 (inclusive)
+# several places are hardcoded with this assumption
+# if that ever changes, go through and find all of them and fix them
+
 
 import numpy
 
@@ -31,6 +39,7 @@ class EWA_Agent:
         
         # initial choice for sanity testing
         self.choice=0 # not possible to get normally
+        self.last_payoff=0
 
         
     # this is the function that returns the payoff for each potential choice 
@@ -45,12 +54,21 @@ class EWA_Agent:
             else:
                 return max_payoff - (choice-minimum)*10
             
+    def get_last_choice(self):
+        return int(self.choice)
+    
+    def get_last_payoff(self):
+        return int(self.last_payoff)
+            
     def make_choice(self):
         self.choice = numpy.random.choice(self.choices,p=self.choice_prob)
-        return self.choice
+        return int(self.choice)
         
     def update_attractions(self, minimum):
         assert(self.choice >= minimum)
+        
+        self.last_payoff=self.payoff(self.choice, minimum)
+        
         # this is the method which updates that dictionary
         for option in self.choices:
             self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice))
@@ -92,7 +110,7 @@ class EWA_Agent:
 
 
 
-k=EWA_Agent()
-m=k.make_choice()
-k.update_attractions(m)
-k.report_state()
+# k=EWA_Agent()
+# m=k.make_choice()
+# k.update_attractions(m)
+# k.report_state()

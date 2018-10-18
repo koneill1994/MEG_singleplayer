@@ -1,4 +1,5 @@
 from MEG_singleplayer.math_problem_code import math_sum as mp
+from MEG_singleplayer.EWA_agent_code import EWA_agent as EWA
 
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
@@ -18,7 +19,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'MEG_singleplayer'
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 10
     min_choice = 1
     max_choice = 7
     base_payment = 1
@@ -34,6 +35,10 @@ class Constants(BaseConstants):
                     ["20", "40", "60", "80","100","120",   ""],
                     ["10", "30", "50", "70", "90","110","130"]]
     difficulty_levels = [1,2,3,4,5,6,7]
+    
+    agents=[EWA.EWA_Agent(),
+            EWA.EWA_Agent(),
+            EWA.EWA_Agent()]
 
 
 
@@ -42,7 +47,6 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    total_contribution = models.CurrencyField()
     
     min_group = models.CurrencyField()
     max_payoff = models.CurrencyField()
@@ -50,9 +54,13 @@ class Group(BaseGroup):
     # with help from m_collins:
     def set_payoffs(self):
       
-      self.total_contribution = sum([p.problem_difficulty for p in self.get_players()])
-      self.min_group = min([p.problem_difficulty for p in self.get_players()])
+      contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
+      
+      self.min_group = min(contributions)
+      [a.update_attractions(self.min_group) for a in Constants.agents]
+      
       self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
+      
       
       for p in self.get_players():
         if p.problem_difficulty == self.min_group:

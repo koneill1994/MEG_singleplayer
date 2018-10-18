@@ -115,6 +115,29 @@
   {% endif %}
 
 {% endfor %}
+
+<!-- The following is for the AI agents -->
+
+{% for a in Constants.agents %}
+  
+  
+    {% if a.get_last_choice == group.min_group %}
+      <tr style="background-color: #ff7f7f">
+      <td style="border: 1px solid black; background-color: #ff8888">{{a.get_last_choice}} effort units</td>
+      <td style="border: 1px solid black; background-color: #ff8888">{{a.get_last_payoff}} points</td>
+      </tr>
+    {% else %}
+      <tr>
+      <td style="border: 1px solid black">{{a.get_last_choice}} effort units</td>
+      <td style="border: 1px solid black">{{a.get_last_payoff}} points</td>
+      </tr>
+    {% endif %}
+
+{% endfor %}
+
+
+
+
 </table>
 
 {% if player.problem_difficulty == group.min_group %}
