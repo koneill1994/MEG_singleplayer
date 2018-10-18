@@ -1,4 +1,4 @@
-from minimum_effort_game.math_problem_code import math_sum as mp
+from MEG_singleplayer.math_problem_code import math_sum as mp
 
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
@@ -16,7 +16,7 @@ Your app description
 
 
 class Constants(BaseConstants):
-    name_in_url = 'minimum_effort_game'
+    name_in_url = 'MEG_singleplayer'
     players_per_group = None
     num_rounds = 1
     min_choice = 1
