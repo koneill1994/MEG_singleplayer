@@ -1,0 +1,18 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Contribute
+{%endblock%}
+
+{% block content %}
+
+{% formfield player.contribution with label="How much effort would you like to allocate? (1 through 7)" %}
+
+{% next_button %}
+
+
+{# {% include Constants.instructions_template %} #}
+
+
+{% endblock %}

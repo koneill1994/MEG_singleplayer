@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<h1>Scenario </h1>
+<p> You and the other players must work together to complete a goal. For instance, consider that you all work for a catering company. The goal could be to prepare food for a customer. In order to complete the goal and leave for the day, the group must prepare dinner and clean up the kitchen. Each person is working on a separate task (gathering materials, cooking an item, or cleaning) but no one can leave until everyone has completed their task. There is an allotted time to complete the goal, but everyone has the option of increasing their productivity to get their task finished earlier. Each person can increase productivity by allocating a number of units of effort, which determines how much time they want to cut off from the allotted work time. </p>
+
+<!--   
+//potential rewording
+
+<h1>Scenario </h1>
+<p> 
+
+You and the other players must work together to complete a goal. For instance, consider that you all work for an accounting company. 
+
+The goal could be to prepare an accurate report for a customer. In order to complete the goal, the group must prepare their own portion of the report. 
+
+Each person is working on a separate task (gathering materials,  performing calcutions) but you can't submit the report until everyone has completed their portion. 
+
+Each person can increase productivity by allocating a number of units of effort, which determine how accurate the final report is. 
+
+However, the accuracy of the report will be determined by the person who puts in the least amount of effort.  
+
+</p>
+
+-->
+
+    {% next_button %}
+
+{% endblock %}

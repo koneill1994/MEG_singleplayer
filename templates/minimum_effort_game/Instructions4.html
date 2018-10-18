@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<b>The following are screenshots of the software that administers the game</b>
+
+<img src="{% static "minimum_effort_game/screenshot1.png" %}" style="border-style: solid; border-width: 4px;"/>
+<img src="{% static "minimum_effort_game/screenshot2.png" %}" style="border-style: solid; border-width: 4px;"/>
+<img src="{% static "minimum_effort_game/screenshot3.png" %}" style="border-style: solid; border-width: 4px;"/>
+<img src="{% static "minimum_effort_game/screenshot4.png" %}" style="border-style: solid; border-width: 4px;"/>
+
+<p></p>
+
+    {% next_button %}
+
+{% endblock %}

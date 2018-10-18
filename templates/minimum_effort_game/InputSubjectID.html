@@ -1,0 +1,23 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Subject ID and Demographics
+{%endblock%}
+
+{% block content %}
+
+{% formfield player.subject_ID with label="Input subject ID" %}
+
+<p>Please answer the demographic questions below.  </p>
+
+{% formfield player.gender with label="What gender do you identify as?" %}
+
+{% formfield player.age with label="What is your age?" %}
+
+
+
+{% next_button %}
+
+
+{% endblock %}

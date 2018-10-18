@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Debriefing
+{% endblock %}
+
+{% block content %}
+
+<p>Answer the following questions about the task you just did.  </p>
+ 
+ 
+<p><b> How much would you agree that each of the following reasons motivated you choosing the level of effort in the game that you did?  </b></p>
+
+<br>
+
+  {% for field in form %}
+    {% formfield field %}
+    <br>
+  {% endfor %}
+
+   
+    {% next_button %}
+
+{% endblock %}

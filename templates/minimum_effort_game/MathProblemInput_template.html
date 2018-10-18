@@ -1,0 +1,23 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Input Math Problem
+{%endblock%}
+
+
+
+{% block content %}
+
+<p><b>Math Problem:</b></p>
+<p> 24+9*2 </p>
+
+{% formfield player.input_answer with label="Answer:" %}
+
+{% next_button %}
+
+
+{# {% include Constants.instructions_template %} #}
+
+
+{% endblock %}

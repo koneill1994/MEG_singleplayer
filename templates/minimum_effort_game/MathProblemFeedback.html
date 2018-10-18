@@ -1,0 +1,36 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Math Problem Feedback
+{%endblock%}
+
+
+
+{% block content %}
+
+<img src="{% static "minimum_effort_game/MEGPayoffMatrix.png" %}"/>
+
+<p><b>Feedback:</b></p>
+
+{% if correct %}
+
+<p> Correct! </p>
+
+{% else %}
+
+<p> Incorrect </p>
+
+{% endif %}
+
+<p> The answer was {{answer}} </p>
+<p> And you said {{input_ans}} </p>
+
+
+{% next_button %}
+
+
+{# {% include Constants.instructions_template %} #}
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<h1>How to Play  </h1>
+<p> There will be multiple rounds in the game. During each round, you can choose a level of effort (work productivity) between 1 and 7. In the catering example, putting in more effort means working harder. To simulate the effort of working harder, you will need to solve a math problem. The higher the level of effort you choose, the harder the math problem becomes. In each round, you will receive a payoff, which depends on your amount of effort, the amount of effort of the group, and the degree of coordination (how well you work together). If you choose to put in more effort than everyone else and complete your task first, you still have to wait until all tasks are completed, which decreases your payoff. Due to this fact, the lowest level of effort by a member of the group (minimum effort) determines the payoffs for everyone. </p>
+
+
+<p style="padding-top: 50px"> <b>Here is an example of a problem of effort level 1: </b> </p>
+
+<p> 4 + 7 </p>
+
+<p>In this example you would enter in <b>11</b> to answer the problem correctly.  </p>
+
+<p></p>
+
+<p style="padding-top: 50px"> <b>Here is an example of a problem of effort level 7: </b></p>
+
+<p> 9 + 1 + 1 + 5 + 3 + 2 + 1 + 9 </p>
+<p style="padding-bottom: 50px">In this example you would enter in <b>31</b> to answer the problem correctly.  </p>
+
+
+
+<p>Your performance bonus will be determined by the number of points you earn in the game.  Incorrect solutions to the math problems will be deducted from your pay.  </p>
+
+
+
+    {% next_button %}
+
+{% endblock %}

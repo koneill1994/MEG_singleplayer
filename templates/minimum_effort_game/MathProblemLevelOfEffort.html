@@ -1,0 +1,21 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Level Of Effort
+{%endblock%}
+
+
+{% block content %}
+
+<img src="{% static "minimum_effort_game/MEGPayoffMatrix.png" %}"/>
+
+{% formfield player.problem_difficulty with label="How much effort would you like to allocate? (1 through 7)" %}
+
+{% next_button %}
+
+
+{# {% include Constants.instructions_template %} #}
+
+
+{% endblock %}

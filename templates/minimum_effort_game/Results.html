@@ -1,0 +1,131 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+
+
+ 
+
+{% block content %}
+
+
+<table style="width:100%; border: 1px solid black;">
+<tr>
+  <th colspan=2></th>
+  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+</tr>
+
+<tr>
+  <th colspan=2></th>
+  {% for lvl in Constants.difficulty_levels %}
+    {% if forloop.counter == group.min_group %}
+      <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+    {% else %}
+      <td align = "center"><b>{{lvl}}</b></th>
+    {% endif %}
+  {% endfor %}
+</tr>
+
+
+{% for row in Constants.payoffmatrix %}
+  {% if forloop.counter == player.problem_difficulty %}
+  <tr  align = "center" style = "background-color: #ffffbc">
+  {% else %}
+  <tr  align = "center">
+  {% endif %}
+    {% if forloop.first %}
+      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+    {% endif %}
+    <th> {{forloop.counter}} </th>
+  {% for item in row %}
+  
+    {% if forloop.counter == group.min_group %}
+      {% if forloop.parentloop.counter == player.problem_difficulty %}
+        <td style="background-color: #ffbb7f "> {{item}} </td>
+      {% else %}
+        <td style="background-color: #ff8888 "> {{item}} </td>
+      {% endif %}
+      
+    {% else %}
+      <td> {{item}} </td>
+    {% endif %}
+    
+  {% endfor %}
+  </tr>
+{% endfor %}
+
+</table>
+
+
+{% comment %}
+
+<p></p>
+<p>Your level of effort: {{player.problem_difficulty}}</p>
+<p>You earned {{player.payoff}}</p>
+
+<p>The minimum effort was {{group.min_group}}</p>
+<p>Player(s) who gave the minimum effort earned {{group.max_payoff}}</p>
+
+{% endcomment %}
+
+<p style="padding-top: 50px"></p>
+
+
+<p> Players: </p>
+<table style="width:100%; border: 1px solid black;">
+  <tr>
+  <th style="border: 1px solid black"> Level of effort </th>
+  <th style="border: 1px solid black"> Payoff </th>
+  </tr>
+  
+  
+{% for p in group.get_players %}
+  
+  {% if p.id_in_group == player.id_in_group %}
+    {%if p.problem_difficulty == group.min_group%}
+      <tr style="background-color: #ff8888">
+      <td style="border: 1px solid black; background-color: #FFBB7F">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #FFBB7F">{{p.payoff}}</td>
+      </tr>
+    {% else %}
+      <tr style="background-color: #ffffbc">
+      <td style="border: 1px solid black; background-color: #FFFFBC">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #FFFFBC">{{p.payoff}}</td>
+      </tr>
+    {% endif %}
+  
+  {% else %}
+  
+    {% if p.problem_difficulty == group.min_group %}
+      <tr style="background-color: #ff7f7f">
+      <td style="border: 1px solid black; background-color: #ff8888">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #ff8888">{{p.payoff}}</td>
+      </tr>
+    {% else %}
+      <tr>
+      <td style="border: 1px solid black">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black">{{p.payoff}}</td>
+      </tr>
+    {% endif %}
+  {% endif %}
+
+{% endfor %}
+</table>
+
+{% if player.problem_difficulty == group.min_group %}
+  <p>(You chose the minimum effort, so you are highlighted in orange.  Other players who chose the minimum effort are highlighted in red)</p>
+  <p></p>
+{% else %}
+  <p>(You are highlighted in yellow, and the minimum effort is highlighted in red)</p>
+{% endif %}
+
+
+    {% next_button %}
+{% endblock %}
+
+

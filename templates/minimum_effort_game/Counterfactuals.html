@@ -1,0 +1,327 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Results page 2
+{% endblock %}
+
+
+
+ 
+
+{% block content %}
+
+
+{% if player.problem_difficulty > group.min_group %}
+
+  {% if choose_lower > 0 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_lower}} </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == group.min_group %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == choose_lower %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == group.min_group %}
+          {% if forloop.parentloop.counter == choose_lower %}
+            <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+  {% if choose_higher < 8 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_higher}} </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == group.min_group %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == choose_higher %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == group.min_group %}
+          {% if forloop.parentloop.counter == choose_higher %}
+            <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+  {% if min_higher < 8 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if the minimum effort had been {{min_higher}} </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == min_higher %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == player.problem_difficulty %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == min_higher %}
+          {% if forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ffbb7f"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+          <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+{% else %}
+
+  {% if choose_lower > 0 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_lower}}, which would become the minimum effort.  </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == choose_lower %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == choose_lower %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == choose_lower %}
+          {% if forloop.parentloop.counter == choose_lower %}
+            <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+          <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+
+  {% if choose_higher < 8 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_higher}} and the minimum effort remained at {{group.min_group}} </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == group.min_group %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == choose_higher %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == group.min_group %}
+          {% if forloop.parentloop.counter == choose_higher %}
+            <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+  {% if min_higher < 8 %}
+  
+    <p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_higher}} and the minimum effort had been {{min_higher}} </p>
+    
+    <table style="width:100%; border: 1px solid black;">
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+        {% if forloop.counter == min_higher %}
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+        {% else %}
+          <td align = "center"><b>{{lvl}}</b></th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% for row in Constants.payoffmatrix %}
+      {% if forloop.counter == choose_higher %}
+      <tr  align = "center" style = "background-color: #ffffbc">
+      {% else %}
+      <tr  align = "center">
+      {% endif %}
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}
+        {% if forloop.counter == min_higher %}
+          {% if forloop.parentloop.counter == choose_higher %}
+            <td style="background-color: #ffbb7f"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
+          {% endif %}
+        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+          <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
+        {% else %}
+          <td> {{item}} </td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+        <p>Your actual score is the bold number outlined in a box</p>
+  
+  {% endif %}
+
+
+{% endif %}
+
+
+
+
+    {% next_button %}
+{% endblock %}
+
+
