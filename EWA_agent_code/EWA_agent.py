@@ -60,6 +60,15 @@ class EWA_Agent:
     def get_last_payoff(self):
         return int(self.last_payoff)
             
+    def get_weighted_payoffs(self):
+        return self.weighted_payoffs
+        
+    def get_attractions(self):
+        return self.attraction
+        
+    def get_choice_prob(self):
+        return self.choice_prob
+            
     def make_choice(self):
         self.choice = numpy.random.choice(self.choices,p=self.choice_prob)
         return int(self.choice)

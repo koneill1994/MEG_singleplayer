@@ -51,6 +51,12 @@ class Group(BaseGroup):
     min_group = models.CurrencyField()
     max_payoff = models.CurrencyField()
     
+    agent_weighted_payoffs = models.StringField()
+    agent_attractions = models.StringField()
+    agent_choice_prob = models.StringField()
+    agent_choices = models.StringField()
+    
+    
     # with help from m_collins:
     def set_payoffs(self):
       
@@ -67,6 +73,11 @@ class Group(BaseGroup):
           p.payoff = self.max_payoff
         else: # presuming the min_group code works right, there won't be anyone below min_group
           p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
+        
+      self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
+      self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
+      self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
+      self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
           
 
 class Player(BasePlayer):
