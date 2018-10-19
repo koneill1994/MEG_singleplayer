@@ -91,6 +91,7 @@ class EWA_Agent:
         for option in self.choices:
             self.attraction[option-1]=(self.phi * self.N_prev * self.attraction_prev[option-1] + self.weighted_payoffs[option-1])/self.N_current
 
+        self.N_prev = self.N_current
 
         for option in self.choices:
             self.choice_prob[option-1]=numpy.exp(self.lamb*self.attraction[option-1])/sum(numpy.exp( [self.lamb*n for n in self.attraction] ))
@@ -120,6 +121,9 @@ class EWA_Agent:
 
 
 # k=EWA_Agent()
-# m=k.make_choice()
-# k.update_attractions(m)
-# k.report_state()
+
+# for n in range(1,10):
+    # k.make_choice()
+    # k.update_attractions(1)
+    # k.report_state()
+
