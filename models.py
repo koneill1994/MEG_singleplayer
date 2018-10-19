@@ -113,7 +113,7 @@ class Player(BasePlayer):
     
     def CalculateTotalPayoff(self):
       # hope rewriting this doesn't cause problems
-      self.payment = (self.participant.payoff/300.0)-(self.wrong_math_answers*130)
+      self.payment = float((self.participant.payoff/300.0)-(self.wrong_math_answers*130))
     
     
     def GetMathProblem(self, diff):

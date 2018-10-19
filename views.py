@@ -96,9 +96,9 @@ class DebriefQuestions(Page):
     return self.round_number == models.Constants.num_rounds
   
   def get_form_fields(self):
-    fields = self.form_fields[:len(form_fields)-1]
+    fields = self.form_fields[:len(self.form_fields)-1]
     random.shuffle(fields)
-    return fields+self.form_fields[len(form_fields)-1]
+    return fields+[self.form_fields[len(self.form_fields)-1]]
 
 
 page_sequence = [
@@ -106,7 +106,6 @@ page_sequence = [
     Instructions1,
     Instructions2,
     Instructions3,
-    InstructionsWaitPage,
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
