@@ -24,11 +24,11 @@ class EWA_Agent:
         # Free parameters
         # set these more accurately once you've done some model fitting
 
-        self.delta = .5 # depreciation parameter
-        self.rho = .5 # "observation-previous-experience" parameter whatever that is
+        self.delta = 1 # depreciation parameter
+        self.rho = .6 # "observation-previous-experience" parameter whatever that is
         self.N_prev=0 # initial N value
-        self.phi = .5 # some sort of attraction parameter 
-        self.lamb = .5 # (lambda) modifies the attraction value 
+        self.phi = .7 # some sort of attraction parameter 
+        self.lamb = .2 # (lambda) modifies the attraction value 
         self.attraction_prev = [0]*7 # initial attraction
 
         # list to hold the attraction values
@@ -92,11 +92,14 @@ class EWA_Agent:
             self.attraction[option-1]=(self.phi * self.N_prev * self.attraction_prev[option-1] + self.weighted_payoffs[option-1])/self.N_current
 
         self.N_prev = self.N_current
+        self.attraction_prev=self.attraction[:]
 
         for option in self.choices:
             self.choice_prob[option-1]=numpy.exp(self.lamb*self.attraction[option-1])/sum(numpy.exp( [self.lamb*n for n in self.attraction] ))
     
     def report_state(self):
+        
+        print("\n\n\n\n")
         
         # print parameters
         print("\nFree parameters")
@@ -123,7 +126,7 @@ class EWA_Agent:
 # k=EWA_Agent()
 
 # for n in range(1,10):
-    # k.make_choice()
-    # k.update_attractions(1)
+    # m=k.make_choice()
+    # k.update_attractions(min(m,4))
     # k.report_state()
 
