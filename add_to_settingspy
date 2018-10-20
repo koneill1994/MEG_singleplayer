@@ -1,6 +1,6 @@
     {
     'name': 'MEG_singleplayer',
-    'display_name': "Minimum Effort Game",
+    'display_name': "MEG singleplayer",
     'num_demo_participants': 1,
     'app_sequence': ['MEG_singleplayer'],    
     },
