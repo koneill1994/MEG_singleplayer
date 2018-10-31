@@ -42,8 +42,7 @@ class EWA_Agent:
         self.last_payoff=0
 
         
-    # this is the function that returns the payoff for each potential choice 
-    # (even ones below minimum -- it works out in the math, don't worry about it)
+    # payoff function
     def payoff(self,choice,minimum):
         max_payoff = ((minimum - 1) * 10) + 70
         if choice ==minimum:
@@ -53,6 +52,20 @@ class EWA_Agent:
                 return ((choice - 1) * 10) + 70
             else:
                 return max_payoff - (choice-minimum)*10
+
+    # this is the function that returns the payoff for each potential choice 
+    # (even ones below minimum -- it works out in the math, don't worry about it)            
+    def payoff2(self,choice,minimum, min2):
+        max_payoff = ((minimum - 1) * 10) + 70
+        if choice <=minimum:
+            return max_payoff
+        else:
+            if choice < min2:
+                return ((min2 - 1) * 10) + 70
+            else:
+                return (min2-1)*10 + 70 - (choice-min2)*10
+        
+            
             
     def get_last_choice(self):
         return int(self.choice)
@@ -73,14 +86,13 @@ class EWA_Agent:
         self.choice = numpy.random.choice(self.choices,p=self.choice_prob)
         return int(self.choice)
         
-    def update_attractions(self, minimum):
+    def update_attractions(self, minimum, min2):
         assert(self.choice >= minimum)
         
         self.last_payoff=self.payoff(self.choice, minimum)
         
-        # this is the method which updates that dictionary
         for option in self.choices:
-            self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice))
+            self.weighted_payoffs[option-1]=self.payoff2(option,minimum, min2)*(self.delta + (1-self.delta)*int(option==self.choice))
            
         # rho, N_prev are set above
         self.N_current=self.rho*self.N_prev+1

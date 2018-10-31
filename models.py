@@ -63,7 +63,8 @@ class Group(BaseGroup):
       contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
       
       self.min_group = min(contributions)
-      [a.update_attractions(self.min_group) for a in Constants.agents]
+      min2=sorted(contributions)[1]
+      [a.update_attractions(self.min_group, min2) for a in Constants.agents]
       
       self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
       
