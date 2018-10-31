@@ -57,8 +57,10 @@ class EWA_Agent:
     # (even ones below minimum -- it works out in the math, don't worry about it)            
     def payoff2(self,choice,minimum, min2):
         max_payoff = ((minimum - 1) * 10) + 70
-        if choice <=minimum:
+        if choice == minimum:
             return max_payoff
+        else if choice < minimum:
+            return ((minimum - 1) * 10) + 70
         else:
             if choice < min2:
                 return ((min2 - 1) * 10) + 70
