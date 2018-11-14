@@ -10,7 +10,7 @@
 # if that ever changes, go through and find all of them and fix them
 
 
-import numpy
+import numpy, random
 
 
 class EWA_Agent:
@@ -34,8 +34,20 @@ class EWA_Agent:
         # list to hold the attraction values
         self.attraction = self.attraction_prev[:]
         
+        #############################################
         #list to hold choice probability
-        self.choice_prob=[1.0/7]*7
+        #################################
+        #uniform probability
+        #self.choice_prob=[1.0/7]*7
+        
+        # based on pilot data
+        self.choice_prob=[.025,
+        .1,
+        .2,
+        .25,
+        .175,
+        .075,
+        .175]
         
         # initial choice for sanity testing
         self.choice=0 # not possible to get normally
@@ -55,11 +67,12 @@ class EWA_Agent:
 
     # this is the function that returns the payoff for each potential choice 
     # (even ones below minimum -- it works out in the math, don't worry about it)            
+    # its obsolete now lol don't use this
     def payoff2(self,choice,minimum, min2):
         max_payoff = ((minimum - 1) * 10) + 70
         if choice == minimum:
             return max_payoff
-        else if choice < minimum:
+        elif choice < minimum:
             return ((minimum - 1) * 10) + 70
         else:
             if choice < min2:
@@ -88,13 +101,23 @@ class EWA_Agent:
         self.choice = numpy.random.choice(self.choices,p=self.choice_prob)
         return int(self.choice)
         
-    def update_attractions(self, minimum, min2):
-        assert(self.choice >= minimum)
-        
+    def update_all_attraction(self, choices, minimum):
+    
         self.last_payoff=self.payoff(self.choice, minimum)
+    
+        uniques=list(set(choices))
+        
+        random.shuffle(uniques)
+        
+        for c in uniques:
+            self.update_attractions(c)
+            
+    def update_attractions(self, minimum):
+        
+
         
         for option in self.choices:
-            self.weighted_payoffs[option-1]=self.payoff2(option,minimum, min2)*(self.delta + (1-self.delta)*int(option==self.choice))
+            self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice))
            
         # rho, N_prev are set above
         self.N_current=self.rho*self.N_prev+1
